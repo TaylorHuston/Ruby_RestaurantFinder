@@ -8,13 +8,18 @@ class Restaurant
       
   
   #Class should know if restaurant file exists
-  def self.file_exists?()
-    
+  def self.file_usable?()
+    if (@@filepath!=nil && File.exists?(@@filepath) && File.readable?(@@filepath) && File.writable?(@@filepath))
+      return true
+    else
+      return false
+    end
   end
   
   #Create restaurant file
   def self.create_file()
-    
+    File.open(@@filepath, 'w')
+    return file_usable?()
   end
   
   

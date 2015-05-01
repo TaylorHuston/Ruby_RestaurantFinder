@@ -4,7 +4,12 @@ class Guide
   
   #Locate restaurant text file, or create a new one if needed
   def initialize(path=nil)
+    Restaurant.filepath=path
     
+    if (Restaurant.file_usable?()== false)
+      Restaurant.create_file()
+    end
+  
   end
   
   def launch()
