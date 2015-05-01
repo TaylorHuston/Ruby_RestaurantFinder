@@ -1,6 +1,13 @@
 require_relative 'restaurant'
 
 class Guide
+  class Config
+    @@actions = ['list', 'find', 'add', 'quit']
+    def self.actions
+      return @@actions
+    end
+  end
+  
   
   #Locate restaurant text file, or create a new one if needed
   def initialize(path=nil)
@@ -25,12 +32,19 @@ class Guide
     conclusion()
   end
   
+  #Loop until we get a proper user action
   def get_action()
-    print "> "
-    user_response = gets.chomp
-    return user_response.downcase.strip
+    action=nil
+    while (Guide::Config.actions.include?(action) == false)
+      puts "Actions: " + Guide::Config.actions.join(", ")
+      print "> "
+      user_response = gets.chomp
+      action =  user_response.downcase.strip
+    end
+    return action
   end
   
+  #Process based on action provided by user
   def do_action(action)
     case action
       when 'list'
