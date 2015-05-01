@@ -18,12 +18,17 @@ class Guide
     result=nil
     
     while (result!=:quit)
-      print "> "
-      user_response = gets.chomp
-      result = do_action(user_response)
+      action = get_action()
+      result = do_action(action)
     end
  
     conclusion()
+  end
+  
+  def get_action()
+    print "> "
+    user_response = gets.chomp
+    return user_response.downcase.strip
   end
   
   def do_action(action)
