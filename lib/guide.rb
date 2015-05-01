@@ -1,3 +1,5 @@
+require_relative 'restaurant'
+
 class Guide
   
   #Locate restaurant text file, or create a new one if needed
