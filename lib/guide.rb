@@ -15,7 +15,29 @@ class Guide
   def launch()
     introduction()
     
+    loop do
+      print "> "
+      user_response = gets.chomp
+      result = do_action(user_response)
+      
+      if (result == :quit)
+        break
+      end
+    end
     conclusion()
+  end
+  
+  def do_action(action)
+    case action
+      when 'list'
+        puts "Listing..."
+      when 'find'
+        puts "Finding..."
+      when 'quit'
+        return :quit
+    else
+        puts "\nI don't understant that command.\n"
+    end
   end
   
   def introduction()
