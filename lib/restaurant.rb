@@ -2,6 +2,11 @@ class Restaurant
   
   @@filepath=nil
   
+  def self.filepath=(path=nil)
+    @@filepath = File.join(APP_ROOT, path)
+  end
+      
+  
   #Class should know if restaurant file exists
   def self.file_exists?()
     
