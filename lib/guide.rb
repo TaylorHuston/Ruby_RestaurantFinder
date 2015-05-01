@@ -19,40 +19,42 @@ class Guide
   
   end
   
-  def launch()
-    introduction()
+  def launch
+    introduction
 
     result=nil
     
     while (result!=:quit)
-      action = get_action()
-      result = do_action(action)
+      action, args = get_action
+      result = do_action(action, args)
     end
  
-    conclusion()
+    conclusion
   end
   
   #Loop until we get a proper user action
-  def get_action()
+  def get_action
     action=nil
     while (!Guide::Config.actions.include?(action))
-      puts "Actions: " + Guide::Config.actions.join(", ")
+      puts "\nActions: " + Guide::Config.actions.join(", ")
       print "> "
       user_response = gets.chomp
-      action =  user_response.downcase.strip
+      args =  user_response.downcase.strip.split(' ')
+      action = args.shift
     end
-    return action
+    return [action, args]
   end
   
   #Process based on action provided by user
-  def do_action(action)
+  def do_action(action, args=[])
     case action
       when 'list'
         list
       when 'find'
-        puts "Finding..."
+        keyword = args.shift
+        find(keyword)
       when 'add'
-       add
+        add
       when 'quit'
         return :quit
       else
@@ -68,6 +70,24 @@ class Guide
       puts rest.name + " | " + rest.cuisine + " | " + rest.price
     end
     
+  end
+  
+  def find(keyword=nil)
+    if(keyword)
+      restaurants = Restaurant.saved_restaurants
+      keyword.downcase!
+      
+      found = restaurants.select do |rest|
+        rest.name.downcase.include?(keyword) ||
+        rest.cuisine.downcase.include?(keyword)
+      end
+      
+      found.each do |rest|
+        puts rest.name + " | " + rest.cuisine + " | " + rest.price
+      end
+    else
+      puts "Find using a key phrase.\nExample: Find Mexican."
+    end
   end
   
   def add
