@@ -14,16 +14,15 @@ class Guide
   
   def launch()
     introduction()
+
+    result=nil
     
-    loop do
+    while (result!=:quit)
       print "> "
       user_response = gets.chomp
       result = do_action(user_response)
-      
-      if (result == :quit)
-        break
-      end
     end
+ 
     conclusion()
   end
   
