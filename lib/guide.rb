@@ -13,7 +13,7 @@ class Guide
   def initialize(path=nil)
     Restaurant.filepath=path
     
-    if (Restaurant.file_usable?()== false)
+    if (!Restaurant.file_usable?())
       Restaurant.create_file()
     end
   
@@ -35,7 +35,7 @@ class Guide
   #Loop until we get a proper user action
   def get_action()
     action=nil
-    while (Guide::Config.actions.include?(action) == false)
+    while (!Guide::Config.actions.include?(action))
       puts "Actions: " + Guide::Config.actions.join(", ")
       print "> "
       user_response = gets.chomp
@@ -51,10 +51,30 @@ class Guide
         puts "Listing..."
       when 'find'
         puts "Finding..."
+      when 'add'
+      add()
       when 'quit'
         return :quit
+      else
+      puts "\nI don't understand that command.\n"
+    end
+  end
+  
+  def add()
+    puts "\nAdd a restuarant\n\n".upcase
+    restaurant = Restaurant.new()
+    
+    print "Restaurant name: "
+    restaurant.name = gets.chomp.strip
+    print "Restaurant cuisine: "
+    restaurant.cuisine = gets.chomp.strip
+    print "Restaurant price: "
+    restaurant.price = gets.chomp.strip
+    
+    if (restaurant.save())
+      puts "\nRestaurant Saved\n\n"
     else
-        puts "\nI don't understant that command.\n"
+      puts "\nError: restaurant not saved\n\n"
     end
   end
   
