@@ -47,11 +47,11 @@ class Guide
   
   #Process based on action provided by user
   def do_action(action, args=[])
+    keyword = args.shift
     case action
       when 'list'
-        list
+        list(keyword)
       when 'find'
-        keyword = args.shift
         find(keyword)
       when 'add'
         add
@@ -62,9 +62,25 @@ class Guide
     end
   end
   
-  def list
+  def list(sort_by=nil)
+    sorter = 'name'
+    if(['name','cuisine','price'].include?(sort_by))
+      sorter = sort_by
+    end
+    
     puts "\nListing restaurants\n\n".upcase
     restaurants = Restaurant.saved_restaurants
+    
+    restaurants.sort! do |r1, r2|
+      case(sorter)
+        when 'name'
+          r1.name.downcase <=> r2.name.downcase
+        when 'cuisine'
+          r1.cuisine.downcase <=> r2.cuisine.downcase
+        when 'price'
+          r1.price.to_i <=> r2.price.to_i
+      end
+    end
     
     restaurants.each do |rest|
       puts rest.name + " | " + rest.cuisine + " | " + rest.price
