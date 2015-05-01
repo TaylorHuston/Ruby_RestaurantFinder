@@ -52,7 +52,7 @@ class Guide
       when 'find'
         puts "Finding..."
       when 'add'
-      add()
+       add
       when 'quit'
         return :quit
       else
@@ -60,29 +60,23 @@ class Guide
     end
   end
   
-  def add()
-    puts "\nAdd a restuarant\n\n".upcase
-    restaurant = Restaurant.new()
+  def add
+    puts "\nAdd a restaurant\n\n".upcase
     
-    print "Restaurant name: "
-    restaurant.name = gets.chomp.strip
-    print "Restaurant cuisine: "
-    restaurant.cuisine = gets.chomp.strip
-    print "Restaurant price: "
-    restaurant.price = gets.chomp.strip
+    restaurant = Restaurant.build
     
-    if (restaurant.save())
+    if (restaurant.save)
       puts "\nRestaurant Saved\n\n"
     else
       puts "\nError: restaurant not saved\n\n"
     end
   end
   
-  def introduction()
+  def introduction
     puts "\n\n<<< welcome to the Food finder >>>\n\nThis is an interactive guid to help you find the food you crave!\n\n"
   end
   
-  def conclusion()
+  def conclusion
     puts "\n<<< Buh-bye! >>>\n\n\n"
   end
   
