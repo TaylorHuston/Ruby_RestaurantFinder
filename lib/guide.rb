@@ -5,16 +5,18 @@ class Guide
     
   end
   
-  def launch
+  def launch()
+    introduction()
     
+    conclusion()
   end
   
-  def introduction
-    
+  def introduction()
+    puts "\n\n<<< welcome to the Food finder >>>\n\nThis is an interactive guid to help you find the food you crave!\n\n"
   end
   
-  def conclusion
-    
+  def conclusion()
+    puts "\n<<< Buh-bye! >>>\n\n\n"
   end
   
 end
