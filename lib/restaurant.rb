@@ -36,7 +36,24 @@ class Restaurant
   end
   
   def self.saved_restaurants()
+    restaurants = []
     
+    if file_usable?
+      File.open(@@filepath, 'r') do |file|
+        file.each_line do |line|
+          line_array = line.chomp.split("\t")
+          
+          temp = Restaurant.new
+          temp.name = line_array[0]
+          temp.cuisine = line_array[1]
+          temp.price = line_array[2]
+          
+          restaurants << temp
+        end
+      end
+    end
+    
+    return restaurants
   end
   
   def initialize(args={})
